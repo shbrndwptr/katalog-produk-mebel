@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Sun Furniture</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .login-container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .links a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 500px;
+    }
+
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 30%;
+      background-color: white;
+      padding: 30px;
+      margin: 0 auto;
+      box-shadow: 0 6px 12px 4px rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">SUN FURNITURE</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Product</a></li>
+        <li><a href="#">Price</a></li>
+        <li><a href="#">Help Us</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <div class="login-container">
+      <h2>LOGIN</h2>
+      <form id="login-form">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+      <div class="links">
+        <a href="#">Don't have an account yet?</a>
+        <br />
+        <a href="register.html">Register</a>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <h2>HEADQUARTERS</h2>
+    <p>Jln. Kyai Nawawi KM. 02 RT.20 / RW.04</p>
+    <p>Sinanggul Mlonggo Kab. Jepara - Jawa Tengah 59452</p>
+    <p>Instagram: _sunfurniture_</p>
+    <p>WhatsApp: +62 81249656249</p>
+  </footer>
+  <div id="snackbar" class="snackbar"></div>
+</body>
+
+<script>
+// Check if user data exists in localStorage and prefill if available
+window.onload = function () {
+  const savedUsername = localStorage.getItem('username');
+  
+  if (savedUsername) {
+    document.getElementById('username').value = savedUsername;
+  }
+};
+
+// Handle form submission and localStorage update
+document.getElementById("login-form").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  // Hash password before storing (client-side hashing using SHA-256)
+  const hashedPassword = await hashPassword(password);
+
+  // Save username and hashed password to localStorage
+  localStorage.setItem('username', username);
+  localStorage.setItem('password', hashedPassword);
+
+  // Show a snackbar and ask for confirmation to redirect
+  showSnackbar("Login successful!");
+
+  setTimeout(() => {
+    let confirmation = confirm("Do you want to continue to the admin page?");
+    if (confirmation) {
+      window.location.href = "admin.html";
+    } else {
+      showSnackbar("You canceled the redirection.");
+    }
+  }, 2000);
+});
+
+// Hash password using SHA-256
+async function hashPassword(password) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function showSnackbar(message) {
+  var snackbar = document.getElementById("snackbar");
+  snackbar.textContent = message;
+  snackbar.className = "snackbar show";
+  setTimeout(() => { snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+}
+</script>
+
+</html>

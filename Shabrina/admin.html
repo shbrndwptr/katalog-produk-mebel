@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - Sun Furniture</title>
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+
+<body>
+  <div id="sidebar">
+    <h2>Sun Furniture</h2>
+    <ul>
+      <li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
+      <li><a href="#" onclick="showPage('products')">Products</a></li>
+      <li><a href="#" onclick="showPage('orders')">Orders</a></li>
+      <li><a href="#" onclick="showPage('reports')">Reports</a></li>
+      <li><a href="index.html">Logout</a></li>
+    </ul>
+  </div>
+
+  <div id="main-content">
+    <div id="dashboard-page">
+      <h1>Dashboard</h1>
+      <p>Welcome to the Sun Furniture admin dashboard.</p>
+    </div>
+
+    <div id="products-page" style="display: none">
+      <h1>Products</h1>
+
+      <button id="incrementButton" class="create-button" onclick="showProductModal()">
+        Create New Product
+      </button>
+      <button id="count">0</button>
+      <table id="product-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div id="orders-page" style="display: none">
+      <h1>Orders</h1>
+      <button class="create-button" onclick="showOrderModal()">
+        Create New Order
+      </button>
+      <table id="order-table">
+        <thead>
+          <tr>
+            <th>Customer Name</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div id="reports-page" style="display: none">
+      <h1>Reports</h1>
+      <h2>Order Summary</h2>
+      <table id="report-table">
+        <thead>
+          <tr>
+            <th>Customer Name</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total Price</th> 
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <h3>Total Revenue: $<span id="total-revenue">0</span></h3>
+    </div>
+  </div>
+
+  <div id="product-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeProductModal()">&times;</span>
+      <h2>Create New Product</h2>
+      <form id="product-form">
+        <input type="text" id="product-name" placeholder="Product Name" required />
+        <input type="number" id="product-price" placeholder="Price" required />
+        <button type="submit">Add Product</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="order-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeOrderModal()">&times;</span>
+      <h2>Create New Order</h2>
+      <form id="order-form">
+        <input type="text" id="customer-name" placeholder="Customer Name" required />
+        <select id="order-product" required>
+          <option value="">Select a product</option>
+        </select>
+        <input type="number" id="order-quantity" placeholder="Quantity" required />
+        <button type="submit">Add Order</button>
+      </form>
+    </div>
+  </div>
+  <div id="snackbar" class="snackbar"></div>
+</body>
+<script src="js/script.js">
+  function showSnackbar(message) {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.textContent = message;
+    snackbar.className = "snackbar show";
+    setTimeout(() => { snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+  }
+</script>
+<script>
+  const localStorageKey = "JUMLAH_KLIK";
+   if (typeof Storage !== "undefined") {
+      if (localStorage.getItem(localStorageKey) === null) {
+     localStorage.setItem(localStorageKey, 0);
+      }
+             const Incrementbutton = document.querySelector("#incrementButton");
+      const clearButton = document.querySelector("#clear");
+      const countDisplay = document.querySelector("#count");
+      countDisplay.innerText = localStorage.getItem(localStorageKey);
+   Incrementbutton.addEventListener("click", function () {
+      let count = localStorage.getItem(localStorageKey);
+      count++;
+      localStorage.setItem(localStorageKey, count);
+      countDisplay.innerText = localStorage.getItem(localStorageKey);
+       });
+      clearButton.addEventListener("click", function () {
+         localStorage.removeItem(localStorageKey);
+     countDisplay.innerText = 0;
+      });
+     } else {
+       alert("Browser yang Anda gunakan tidak mendukung Web Storage");
+   }
+</script>
+
+</html>
