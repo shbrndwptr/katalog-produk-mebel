@@ -17,12 +17,12 @@
           <input type="text" placeholder="Cari produk...">
           <button type="submit">Cari</button>
         </li>
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.php">Home</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Product</a></li>
         <li><a href="#">Price</a></li>
-        <li><a href="index.html">Help Us</a></li>
-        <li><a href="login.html">Login</a></li>
+        <li><a href="index.php">Help Us</a></li>
+        <li><a href="login.php">Login</a></li>
         
       </ul>
     </nav>
@@ -137,7 +137,6 @@
   </main>
 
 
-
   <script>
     (function () {
       "use strict";
@@ -219,6 +218,8 @@
       init();
 
     })();
+
+   
   </script>
 </body>
 <footer>
