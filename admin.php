@@ -119,7 +119,7 @@ $username = isset($_SESSION['logged_in_user']['email'])
     function showPage(page) {
       const pages = ["dashboard", "products", "orders", "reports"];
       pages.forEach(p => {
-        document.getElementById(${p}-page).style.display = p === page ? "block" : "none";
+        document.getElementById($,{p}-page).style.display = p === page ? "block" : "none";
       });
     }
   </script>
